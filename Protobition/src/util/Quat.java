@@ -1,3 +1,5 @@
+package util;
+
 /**
  * <p>
  * An immutable quaternion (for orientation / rotation).
