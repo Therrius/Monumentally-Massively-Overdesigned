@@ -29,30 +29,10 @@ public class GameInstance {
 
 		long tick = System.currentTimeMillis();
 		while (!win.getKey(KeyEvent.VK_Q)){
-			
-			int x = 0, y = 0, z = 0;
-
-			if(win.getKey(KeyEvent.VK_LEFT)){x++;}
-			if(win.getKey(KeyEvent.VK_RIGHT)){x--;}
-			if(win.getKey(KeyEvent.VK_UP)){z++;}
-			if(win.getKey(KeyEvent.VK_DOWN)){z--;}
-			//y = win.pollMouseWheelClicks();
-			
-			if(win.getKey(KeyEvent.VK_PAGE_UP)){y++;}
-			if(win.getKey(KeyEvent.VK_PAGE_DOWN)){y--;}
-
-			if(x!=0 || y!=0 || z !=0)
-				state.moveCamera(x, y, z);
-			
-			
-			
 			//sleep and draw
 			Thread.sleep(Math.max(tick+20-System.currentTimeMillis(), 0));
 			draw.draw();
 			tick = System.currentTimeMillis();
 		}
-
-		win.dispose();
-		System.exit(1);
 	}
 }

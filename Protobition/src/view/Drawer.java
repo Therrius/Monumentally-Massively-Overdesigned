@@ -14,7 +14,7 @@ public class Drawer {
 
 	DisplayWindow display;
 	BufferedImage image;
-	int currenWidth = 0;
+	int currentWidth = 0;
 	int currentHeight = 0;
 
 
@@ -29,9 +29,9 @@ public class Drawer {
 
 
 	public void draw(){
-		if(currenWidth != display.getDisplayWidth() || currentHeight != display.getDisplayHeight()){
+		if(currentWidth != display.getDisplayWidth() || currentHeight != display.getDisplayHeight()){
 			image = new BufferedImage(display.getDisplayWidth(), display.getDisplayHeight(), BufferedImage.TYPE_INT_ARGB);
-			currenWidth = display.getDisplayWidth();
+			currentWidth = display.getDisplayWidth();
 			currentHeight = display.getDisplayHeight();
 		}
 
@@ -39,7 +39,7 @@ public class Drawer {
 
 		Graphics2D g = image.createGraphics();
 		g.setColor(Color.white);
-		g.fillRect(0, 0, currenWidth, currentHeight);
+		g.fillRect(0, 0, currentWidth, currentHeight);
 
 
 		Vec3 cam = state.getCam();
@@ -53,9 +53,9 @@ public class Drawer {
 			for(int z=0; z<map[x].length; z++){
 
 
-				//top of the block
-				double xPos = (currenWidth/2 + (x-z) * tile_width + (cam.x/cam.y));
-				double yPos = ((x+z) * tile_height + (cam.z/cam.y));
+				//top of the base of the block
+				double xPos = (currentWidth/2 + (x-z) * tile_width + (cam.x/cam.y));
+				double yPos = (currentHeight/2 + (x+z) * tile_height + (cam.z/cam.y));
 
 				int[] xArr = {(int) xPos, (int) (xPos + tile_width), (int) xPos, (int) (xPos-tile_width)};
 				int[] yArr = {(int) yPos, (int) (yPos + tile_height), (int) (yPos + (2*tile_height)), (int) (yPos + tile_height)};
@@ -71,6 +71,8 @@ public class Drawer {
 
 		display.display(image);
 	}
+
+	//private int getworldX
 }
 
 
