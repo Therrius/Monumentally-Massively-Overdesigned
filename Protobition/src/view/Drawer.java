@@ -20,6 +20,10 @@ public class Drawer {
 
 	final int STD_TILE_WIDTH = 10;
 	final int STD_TILE_HEIGHT = 5;
+	
+	private final Color BLOCK_TOP = Color.LIGHT_GRAY;
+	private final Color BLOCK_LEFT = Color.DARK_GRAY;
+	private final Color BLOCK_RIGHT = Color.GRAY;
 
 
 	public Drawer(State state, DisplayWindow display){
@@ -46,8 +50,8 @@ public class Drawer {
 
 		int[][] map = state.getMap();
 		
-		double tile_width = STD_TILE_WIDTH/cam.y;
-		double tile_height = STD_TILE_HEIGHT/cam.y;
+		double tile_width = STD_TILE_WIDTH / (2*cam.y);
+		double tile_height = STD_TILE_HEIGHT / (2*cam.y);
 
 		for(int x=0; x<map.length; x++){
 			for(int z=0; z<map[x].length; z++){
@@ -56,14 +60,30 @@ public class Drawer {
 				//top of the base of the block
 				double xPos = (currentWidth/2 + (x-z) * tile_width + (cam.x/cam.y));
 				double yPos = (currentHeight/2 + (x+z) * tile_height + (cam.z/cam.y));
+				
+				//perform culling
+				if(xPos + STD_TILE_WIDTH > 0 
+						&& xPos - STD_TILE_WIDTH < currentWidth
+						&& yPos + (2 * STD_TILE_HEIGHT) > 0){
 
-				int[] xArr = {(int) xPos, (int) (xPos + tile_width), (int) xPos, (int) (xPos-tile_width)};
-				int[] yArr = {(int) yPos, (int) (yPos + tile_height), (int) (yPos + (2*tile_height)), (int) (yPos + tile_height)};
-
-				g.setColor(Color.gray);
-				g.fillPolygon(xArr, yArr, 4);
-				g.setColor(Color.black);
-				g.drawPolygon(xArr, yArr, 4);
+					//describes an horizontal isometric polygon in the order of left top right bottom
+					int[] xArr = {(int) xPos, (int) (xPos + tile_width), (int) xPos, (int) (xPos-tile_width)};
+					int[] yArr = {(int) (yPos + tile_height), (int) (yPos), (int) (yPos - tile_height), (int) yPos};
+	
+					g.setColor(Color.gray);
+					g.fillPolygon(xArr, yArr, 4);
+					g.setColor(Color.black);
+					g.drawPolygon(xArr, yArr, 4);
+					
+					
+					//draw top
+					//g.fillPolygon(xArr, {yArr[0]+,yArr[1],yArr[2],yArr[3]}, 4);
+					
+					//draw right side
+					
+					//draw left side
+				
+				}
 
 			}
 		}
