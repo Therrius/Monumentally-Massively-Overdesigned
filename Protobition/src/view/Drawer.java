@@ -63,10 +63,10 @@ public class Drawer {
 				
 				//perform culling
 				if(xPos + STD_TILE_WIDTH > 0 
-						&& xPos - STD_TILE_WIDTH < currentWidth
-						&& yPos + (2 * STD_TILE_HEIGHT) > 0){
+					&& xPos - STD_TILE_WIDTH < currentWidth
+					&& yPos + (2 * STD_TILE_HEIGHT) > 0){
 
-					//describes an horizontal isometric polygon in the order of left top right bottom
+					//describes an horizontal isometric polygon in the order of top, right, bottom, left
 					int[] xArr = {(int) xPos, (int) (xPos + tile_width), (int) xPos, (int) (xPos-tile_width)};
 					int[] yArr = {(int) (yPos + tile_height), (int) (yPos), (int) (yPos - tile_height), (int) yPos};
 	
@@ -75,9 +75,10 @@ public class Drawer {
 					g.setColor(Color.black);
 					g.drawPolygon(xArr, yArr, 4);
 					
+					int heightMod = map[x][z] * STD_TILE_HEIGHT * 2;
 					
 					//draw top
-					//g.fillPolygon(xArr, {yArr[0]+,yArr[1],yArr[2],yArr[3]}, 4);
+					//g.fillPolygon(xArr, {yArr[0],yArr[1],yArr[2],yArr[3]}, 4);
 					
 					//draw right side
 					
