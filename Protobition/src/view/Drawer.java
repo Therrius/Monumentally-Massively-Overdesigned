@@ -1,7 +1,6 @@
 package view;
 
 import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
@@ -19,8 +18,8 @@ public class Drawer {
 	int currentHeight = 0;
 
 
-	final int tile_width = 10;
-	final int tile_height = 5;
+	final int STD_TILE_WIDTH = 10;
+	final int STD_TILE_HEIGHT = 5;
 
 
 	public Drawer(State state, DisplayWindow display){
@@ -46,18 +45,20 @@ public class Drawer {
 		Vec3 cam = state.getCam();
 
 		int[][] map = state.getMap();
+		
+		double tile_width = STD_TILE_WIDTH/cam.y;
+		double tile_height = STD_TILE_HEIGHT/cam.y;
 
 		for(int x=0; x<map.length; x++){
-			for(int y=0; y<map[x].length; y++){
+			for(int z=0; z<map[x].length; z++){
 
 
 				//top of the block
-				int xPos = (int)(currenWidth/2 + (x-y)*tile_width + cam.x);
-				int yPos = (int)((x+y)*tile_height + cam.y);
+				double xPos = (currenWidth/2 + (x-z) * tile_width + (cam.x/cam.y));
+				double yPos = ((x+z) * tile_height + (cam.z/cam.y));
 
-				int[] xArr = {xPos, xPos + tile_width, xPos, xPos-tile_width};
-				int[] yArr = {yPos, yPos + tile_height, yPos + (2*tile_height), yPos + tile_height};
-
+				int[] xArr = {(int) xPos, (int) (xPos + tile_width), (int) xPos, (int) (xPos-tile_width)};
+				int[] yArr = {(int) yPos, (int) (yPos + tile_height), (int) (yPos + (2*tile_height)), (int) (yPos + tile_height)};
 
 				g.setColor(Color.gray);
 				g.fillPolygon(xArr, yArr, 4);
