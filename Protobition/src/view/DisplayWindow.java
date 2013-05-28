@@ -1,3 +1,4 @@
+package view;
 import java.awt.AWTEvent;
 import java.awt.AWTException;
 import java.awt.Cursor;
