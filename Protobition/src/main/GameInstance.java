@@ -33,7 +33,7 @@ public class GameInstance {
 		long tick = System.currentTimeMillis();
 		while (!win.getKey(KeyEvent.VK_Q)){
 			//sleep and draw
-			Thread.sleep(Math.max(tick+20-System.currentTimeMillis(), 0));
+			//Thread.sleep(Math.max(tick+20-System.currentTimeMillis(), 0));
 			draw.draw();
 			cont.tick();
 			tick = System.currentTimeMillis();

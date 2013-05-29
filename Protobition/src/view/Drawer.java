@@ -60,32 +60,42 @@ public class Drawer {
 				//top of the base of the block
 				double xPos = (currentWidth/2 + (x-z) * tile_width + (cam.x/cam.y));
 				double yPos = (currentHeight/2 + (x+z) * tile_height + (cam.z/cam.y));
+				//int heightMod = (int) (map[x][z] * STD_TILE_HEIGHT * 2/cam.y);
+				int heightMod = (int) -(map[x][z] * STD_TILE_HEIGHT / cam.y);
 				
 				//perform culling
-				if(xPos + STD_TILE_WIDTH > 0 
-					&& xPos - STD_TILE_WIDTH < currentWidth
-					&& yPos + (2 * STD_TILE_HEIGHT) > 0){
-
-					//describes an horizontal isometric polygon in the order of top, right, bottom, left
-					int[] xArr = {(int) xPos, (int) (xPos + tile_width), (int) xPos, (int) (xPos-tile_width)};
-					int[] yArr = {(int) (yPos + tile_height), (int) (yPos), (int) (yPos - tile_height), (int) yPos};
+				if(xPos + tile_width > 0 
+					&& xPos - tile_width < currentWidth
+					&& yPos + tile_height > 0
+					&& yPos - tile_height + heightMod < currentHeight){
 	
-					g.setColor(Color.gray);
-					g.fillPolygon(xArr, yArr, 4);
-					g.setColor(Color.black);
-					g.drawPolygon(xArr, yArr, 4);
+					//describes main isopoints from left to right and top to bottom
+					int[] xArr = {(int) (xPos-tile_width), (int) xPos, (int) (xPos + tile_width)};
+					int[] yArr = {(int) (yPos - tile_height), (int) (yPos), (int) (yPos + tile_height)};
 					
-					int heightMod = map[x][z] * STD_TILE_HEIGHT * 2;
+					//+heightMod
 					
 					//draw top
-					//g.fillPolygon(xArr, {yArr[0],yArr[1],yArr[2],yArr[3]}, 4);
+					g.setColor(BLOCK_TOP);
+					g.fillPolygon(new int[]{xArr[0],xArr[1],xArr[2],xArr[1]}, 
+						new int[]{yArr[1]+heightMod,yArr[0]+heightMod,yArr[1]+heightMod,yArr[2]+heightMod}, 4);
+					g.setColor(Color.black);
 					
-					//draw right side
+					g.drawPolygon(new int[]{xArr[0],xArr[1],xArr[2],xArr[1]}, 
+						new int[]{yArr[1]+heightMod,yArr[0]+heightMod,yArr[1]+heightMod,yArr[2]+heightMod}, 4);
 					
-					//draw left side
-				
+					if(heightMod<0){
+						//draw right side
+						g.setColor(BLOCK_RIGHT);
+						g.fillPolygon(new int[]{xArr[1],xArr[2],xArr[2],xArr[1]}, 
+								new int[]{yArr[2]+heightMod,yArr[1]+heightMod,yArr[1],yArr[2]}, 4);
+						
+						//draw left side
+						g.setColor(BLOCK_LEFT);
+						g.fillPolygon(new int[]{xArr[0],xArr[1],xArr[1],xArr[0]}, 
+								new int[]{yArr[1]+heightMod,yArr[2]+heightMod,yArr[2],yArr[1]}, 4);
+					}
 				}
-
 			}
 		}
 
