@@ -1,5 +1,6 @@
 package model;
 
+import util.Perlin;
 import util.Vec3;
 
 public class State {
@@ -15,9 +16,11 @@ public class State {
 		map = new int[100][100];
 		cameraPos = new Vec3(0,1,0);
 		
+		Perlin p = new Perlin(32);
+		
 		for (int i=0; i< 100; i++)
 			for (int j=0; j< 100; j++)
-				map[i][j] = (int)(4*Math.random());
+				map[i][j] = (int)(20*p.getNoise(i/100.0, j/100.0, 0, 3))+10;
 	}
 
 
