@@ -5,16 +5,16 @@ import util.Vec3;
 
 public class State {
 
-	private static final double SCROLL_SPEED = 5;
+	private static final double SCROLL_SPEED = 3;
 	private static final double ZOOM_SPEED = 0.01;
 	
 	private int[][] map;
-	private Vec3 cameraPos;
+	private Camera camera;
 
 
 	public State(){
 		map = new int[100][100];
-		cameraPos = new Vec3(0,1,0);
+		camera = new Camera();
 		
 		Perlin p = new Perlin(32);
 		
@@ -29,16 +29,21 @@ public class State {
 	}
 
 	public Vec3 getCam(){
-		return cameraPos;
+		return camera.getPosition();
+	}
+	
+	public void addCameraMovement(){}
+	
+	public void tick(){
+		
 	}
 
 	public void moveCamera(int x, int zoom, int z){
 		if(x!=0 || z!=0)
-			cameraPos = cameraPos.add(new Vec3(x,0,z).scaleto(SCROLL_SPEED * cameraPos.y));
+			camera.setPosition(camera.getPosition().add(new Vec3(x,0,z).scaleto(SCROLL_SPEED / camera.getPosition().y)));
 		if(zoom!=0)
-			cameraPos = cameraPos.add(cameraPos.mul(ZOOM_SPEED * zoom));
+			camera.setPosition(camera.getPosition().add(camera.getPosition().mul(ZOOM_SPEED * zoom)));
 		
-		System.out.println(cameraPos);
+		System.out.println(camera.getPosition());
 	}
-
 }
