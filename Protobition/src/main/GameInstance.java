@@ -6,7 +6,7 @@ import controller.Controller;
 
 import model.State;
 import view.DisplayWindow;
-import view.Drawer;
+import view.isometric.Drawer;
 
 public class GameInstance {
 	

@@ -1,0 +1,13 @@
+﻿Build started 29/06/2013 8:54:07 p.m..
+     1>Project "E:\Program Files\Github Repo\Monumentally-Massively-Overdesigned\Project Strategy\Project Strategy\Project Strategy.vcxproj" on node 2 (Build target(s)).
+     1>Link:
+         E:\Program Files\Visual Studio\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\Program Files\Github Repo\Monumentally-Massively-Overdesigned\Project Strategy\Debug\Project Strategy.exe" /INCREMENTAL /NOLOGO opengl32.lib glu32.lib glfw3.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\Program Files\Github Repo\Monumentally-Massively-Overdesigned\Project Strategy\Debug\Project Strategy.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\Program Files\Github Repo\Monumentally-Massively-Overdesigned\Project Strategy\Debug\Project Strategy.lib" /MACHINE:X86 Debug\GLee.obj
+         "Debug\Project Strategy.obj"
+         Debug\tinythread.obj
+     1>Project Strategy.obj : error LNK2019: unresolved external symbol _glfwInit referenced in function _main
+     1>E:\Program Files\Github Repo\Monumentally-Massively-Overdesigned\Project Strategy\Debug\Project Strategy.exe : fatal error LNK1120: 1 unresolved externals
+     1>Done Building Project "E:\Program Files\Github Repo\Monumentally-Massively-Overdesigned\Project Strategy\Project Strategy\Project Strategy.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:00.38
