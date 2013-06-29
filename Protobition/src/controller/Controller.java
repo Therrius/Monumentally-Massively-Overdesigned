@@ -16,19 +16,19 @@ public class Controller {
 	}
 	
 	public void tick(){
-		int x = 0, y = 0, z = 0;
+		int left = 0, down = 0, zoom = 0;
 
-		if(window.getKey(KeyEvent.VK_LEFT)){x--;z++;}
-		if(window.getKey(KeyEvent.VK_RIGHT)){x++;z--;}
-		if(window.getKey(KeyEvent.VK_UP)){z--;x--;}
-		if(window.getKey(KeyEvent.VK_DOWN)){z++;x++;}
+		if(window.getKey(KeyEvent.VK_LEFT)){left++;}
+		if(window.getKey(KeyEvent.VK_RIGHT)){left--;}
+		if(window.getKey(KeyEvent.VK_UP)){down--;}
+		if(window.getKey(KeyEvent.VK_DOWN)){down++;}
 		//y = win.pollMouseWheelClicks();
 		
-		if(window.getKey(KeyEvent.VK_PAGE_UP)){y++;}
-		if(window.getKey(KeyEvent.VK_PAGE_DOWN)){y--;}
+		if(window.getKey(KeyEvent.VK_PAGE_UP)){zoom++;}
+		if(window.getKey(KeyEvent.VK_PAGE_DOWN)){zoom--;}
 
-		if(x!=0 || y!=0 || z !=0)
-			state.moveCamera(x, y, z);
+		if(left!=0 || down!=0 || zoom!=0)
+			state.moveCamera(left, down, zoom);
 		
 	}
 }

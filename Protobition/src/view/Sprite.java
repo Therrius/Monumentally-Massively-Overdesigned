@@ -3,25 +3,29 @@ package view;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-public class Sprite extends BufferedImage{
+public class Sprite{
 
 	private double xAnchor;
 	private double yAnchor;
 
-	private double lastScale = 1;
+	private int lastScale = 0;
+	private double sizeMod;
+	private BufferedImage originalImage;
 	private BufferedImage lastImage;
 
-	public Sprite(int x, int y, double xAnchor, double yAnchor) {
-		super(x, y, BufferedImage.TYPE_4BYTE_ABGR);
+	
+	public Sprite(BufferedImage image, double sizePercent, double xAnchor, double yAnchor) {
+		this.sizeMod = 1.0/sizePercent;
 		this.xAnchor = xAnchor;
 		this.yAnchor = yAnchor;
-		lastImage = this;
+		originalImage = image;
 	}
 
-	public void drawOnto(Graphics2D g, int x, int y, double scale){
-		if(Math.abs(scale - lastScale)>0.001){
-			lastImage = new BufferedImage((int)(getWidth()*scale), (int)(getHeight()*scale), BufferedImage.TYPE_4BYTE_ABGR);
-			lastImage.getGraphics().drawImage(this, 0, 0, lastImage.getWidth(), lastImage.getHeight(), null);
+	public void drawOnto(Graphics2D g, int x, int y, int scale){
+		//change scale
+		if(scale != lastScale){
+			lastImage = new BufferedImage((int)(originalImage.getWidth()*sizeMod*scale), (int)(originalImage.getHeight()*sizeMod*scale), BufferedImage.TYPE_4BYTE_ABGR);
+			lastImage.getGraphics().drawImage(originalImage, 0, 0, lastImage.getWidth(), lastImage.getHeight(), null);
 			lastScale = scale;
 		}
 

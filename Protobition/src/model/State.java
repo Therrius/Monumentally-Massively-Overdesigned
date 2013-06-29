@@ -5,31 +5,44 @@ import util.Vec3;
 
 public class State {
 
-	private static final double SCROLL_SPEED = 3;
+	private static final double SCROLL_SPEED = 1;
 	private static final double ZOOM_SPEED = 0.01;
 	
-	private int[][] map;
+	private ChunkService map;
 	private Camera camera;
 
 
 	public State(){
-		map = new int[100][100];
 		camera = new Camera();
 		
 		Perlin p = new Perlin(32);
+	
+		int mapSize = 16;
+		double full = mapSize * Chunk.CHUNK_SIZE;
 		
-		for (int i=0; i< 100; i++)
-			for (int j=0; j< 100; j++)
-				map[i][j] = (int)(20*p.getNoise(i/100.0, j/100.0, 0, 3))+10;
+		map = new ChunkService(mapSize);
+		for(int x=0; x<mapSize; x++){
+			for(int z=0; z<mapSize; z++){
+				int[] h = map.getChunk(x, z).getHeightMap();
+				
+				for(int i=0; i<Chunk.CHUNK_SIZE; i++){
+					for(int j=0; j<Chunk.CHUNK_SIZE; j++){
+						h[i+(j*Chunk.CHUNK_SIZE)] = (int)p.getNoise((i+x*Chunk.CHUNK_SIZE)/full, 0, (j+z*Chunk.CHUNK_SIZE)/full, 3);
+					}
+				}
+			}
+		}
+		
+		
 	}
 
 
-	public int[][] getMap(){
-		return map;
+	public Chunk[] getMap(double minGX, double minGZ, double maxGX, double maxGZ){
+		return map.getChucksFrom(minGX, minGZ, maxGX, maxGZ);
 	}
 
-	public Vec3 getCam(){
-		return camera.getPosition();
+	public Camera getCam(){
+		return camera;
 	}
 	
 	public void addCameraMovement(){}
@@ -38,12 +51,16 @@ public class State {
 		
 	}
 
-	public void moveCamera(int x, int zoom, int z){
-		if(x!=0 || z!=0)
-			camera.setPosition(camera.getPosition().add(new Vec3(x,0,z).scaleto(SCROLL_SPEED / camera.getPosition().y)));
-		if(zoom!=0)
-			camera.setPosition(camera.getPosition().add(camera.getPosition().mul(ZOOM_SPEED * zoom)));
+	public void moveCamera(int left, int down, int zoom){
+		if(left!=0 || down!=0){
+			int x = down-left, z = down+left;
+			camera.setPosition(camera.getPosition().add(new Vec3(x,0,z).scaleto(SCROLL_SPEED)));
+		}
+		if(zoom!=0){
+			int scale = (int)(camera.getScale() + zoom*SCROLL_SPEED);
+			camera.setScale((scale>0)?scale:1);
+		}
 		
-		System.out.println(camera.getPosition());
+		System.out.println(camera.getPosition() + " :: " + camera.getScale());
 	}
 }
